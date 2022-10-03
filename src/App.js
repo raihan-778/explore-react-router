@@ -1,46 +1,47 @@
-import logo from "./logo.svg";
-import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/Home/Home";
+import "./App.css";
 import About from "./components/About/About";
+import FriendDetails from "./components/friendDetails/FriendDetails";
+import Friends from "./components/Friends/Friends";
+import Home from "./components/Home/Home";
+import Posts from "./components/Posts/Posts";
 import Product from "./components/Product/Product";
 import Main from "./Layout/Main";
-import Friends from "./components/Friends/Friends";
+import PostDetails from "./PostDetails/PostDetails";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
-        <div>
+        
           <Main></Main>
-        </div>
+       
       ),
       children: [
         {
           path: "/",
           element: (
-            <div>
+            
               <Home></Home>
-              this is homepage
-            </div>
+             
           ),
         },
         {
           path: "/home",
           element: (
-            <div>
+            
               <Home></Home>
-              this is homepage
-            </div>
+              
+            
           ),
         },
         {
           path: "/about",
           element: (
-            <div>
+           
               <About></About>
-            </div>
+           
           ),
         },
         {
@@ -48,28 +49,50 @@ function App() {
           loader: () => {
             return fetch(`https://jsonplaceholder.typicode.com/users`);
           },
-          element: (
-            <div>
+          element: (   
               <Friends></Friends>
-            </div>
           ),
         },
+        {
+          path:`/friend/:friendId`,
+          loader: async ({params})=>{
+            console.log(params.friendId)
+           return fetch(`https://jsonplaceholder.typicode.com/users/${params.friendId}`)
+          },
+          element:(<FriendDetails></FriendDetails>)
+        },
+        {
+          path:"/posts",
+          loader: async ()=>{
+            return fetch(`https://jsonplaceholder.typicode.com/posts`)
+          },
+          element:<Posts></Posts>
+        },
+        {
+          path:"/post/:postId",
+          loader: async ({params})=>{
+            console.log(params.postId)
+           return fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`)
+          },
+          element:<PostDetails></PostDetails>
+          
+        }
       ],
     },
 
     {
       path: "/product",
       element: (
-        <div>
+       
           <Product></Product>
-        </div>
+       
       ),
     },
     {
       path: "*",
       element: (
         <div>
-          <h4>This route is not found</h4>
+          <h4>This route is not found:404</h4>
         </div>
       ),
     },

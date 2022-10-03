@@ -6,4 +6,9 @@
 }
 .header a:hover {
   background: #aba9b4;
+  color: #fff;
+}
+.active {
+  background-color: blue;
+  color: aliceblue;
 }
